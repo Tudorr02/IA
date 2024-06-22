@@ -1,58 +1,6 @@
 [![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-24ddc0f5d75046c5622901739e7c5dd533143b0c8e959d652212380cedb1ea36.svg)](https://classroom.github.com/a/bqhyehlj)
 # Predicția complexității cuvintelor
 
-În acest repo trebuie să puneți:
-- codul împreună cu dependințele ce trebuie executate pentru a produce rezultatul de pe leaderbord
-- un raport pdf detaliat mai jos
-
-
-## Cuprins
-
-- [Cerință și notare](#note)
-- [Ce este complexitatea unui cuvânt?](#complex)
-- [Caracteristici](#features)
-- [Cod de start](#start)
-- [Resurse permize](#resurse)
-- [Sugestii de caracteristici](#sugestii)
-- [Evaluarea modelelor](#eval)
-- [Despre date](#data)
-- [Model de submission](#submission)
-
-<a name="note"></a> 
-## Cerință și notare
-- trebuie să antrenați modele de regresie care să prezică complexitatea cuvintelor pe datele de test
-- proiectul valorează 20% din nota finală și nu se poate recupera la restanță sau la mărire decât prin rezolvarea de exerciții suplimentare
-- echipe de maxim **2 persoane**, notarea se face individual pe baza întrebărilor verbale
-
-**Nota pe proiect se ia în funcție de 3 criterii:**
-1. 50% rezultat în clasament cu cod reproductibil: script gata executabil sau notebook colab sau notebook kaggle 
-2. 50% un raport 1-2 pagini în română sau engleză despre ce ați încercat, ce a mers, ce nu, exploratory data analysis; folosiți template-ul de aici: https://www.overleaf.com/read/rkdqmfsgbjrm#042599
-3. discuție verbală despre rezultate după examenul de pe 25 iunie
-
-
-### Barem:
-- toți ce care depășesc baseline-ul primesc nota 6 pe cod cu condiția ca codul să fie executabil
-- cine nu depășește baseline-ul primește 5 dacă face o analiză exploratorie a datelor în raport
-- raportul trebuie scris într-un [stil academic formal](https://subjectguides.york.ac.uk/academic-writing/academic-style), poate fi în română sau engleză dar fără LLM; rapoartele care conțin multe cuvinte și nu spun nimic (generate cu LLM) primesc 0
-- orice model folosit trebuie explicat verbal sau în scris; modelele pe care nu le puteți explica se depunctează sau se punctează cu 0
-- locul în clasamentul final (private leaderboard) va influența nota cu câte o sutime:
-
-|poziție|  nota |
-|------:|------:|
-|     1 |  10   |
-|     2 |  9.9  |
-|     3 |  9.8  |
-|     4 |  9.7  |
-|     5 |  9.6  |
-|     6 |  9.5  |
-|     7 |  9.4  |
-|     8 |  9.3  |
-|     9 |  9.2  |
-|     10 | 9.1  |
-|     11 | 9    |
-|     .. | ..    |
-
-
 <a name="complex"></a> 
 ## Ce este complexitatea unui cuvânt?
 
@@ -76,55 +24,6 @@ Pentru fiecare astfel de vector vrem să prezicem o valoare numerică y care rep
 Scorul de complexitate depinde de mulți factori, nu doar de proprietățile individuale ale cuvântului, ci și de contextul în care este folosit, funcția și sensurile pe care le are în contextul respectiv.
 
 <a name="start"></a> 
-## Cod de start
-În repo aveți câteva notebooks de la care puteți porni. Acestea pot fi uploadate și pe kaggle și pot rula direct acolo (dar trebuie să elimnați prima celulă care downloadează datele).
-
-- baseline.ipynb, [colab](https://colab.research.google.com/drive/1AhovRCbL5jyLEzAS9TFgu7igILJF6dCm?usp=sharing) - vă arată un proces de extragere a caracteristicilor din text; cu câteva trucuri acest baseline vă poate da nota 6
-- spacy*.ipynb, [colab](https://colab.research.google.com/drive/1sbnw6BfOoneyD_gFWNCov_MN5KDVk-DM?usp=sharing) - tutorial spacy și proprietățile pe care le puteți folosi 
-- transformer*.ipynb, [colab](https://colab.research.google.com/drive/1zAyi_b-OoaxoR0Bnq0Ec2-rKj1h3aXtn?usp=sharing) - tutorial huggingface transformers, cum să obții reprezentări din ultimul strat din rețea
-
-
-<a name="resurse"></a> 
-## Resurse permise
- 
-Aveți voie cu următoarele resurse externe, cu condiția să primiți aprobare de la Sergiu (aprobările se dau individual pe echipă pe mail):
-- liste de cuvinte adiționale, [MRC Psycholinguistic Database](https://websites.psychology.uwa.edu.au/school/MRCDatabase/uwa_mrc.htm) conține informații privitoare la cuvinte sau lista [Dale-Chall](https://readabilityformulas.com/word-lists/the-dale-chall-word-list-for-readability-formulas/)
-- seturi de date de text adiționale din care să extrageți frecvențe, de exemplu [AOCHILDES](https://github.com/UIUCLearningLanguageLab/AOCHILDES) conține ”child-directed speech transcripts, ordered by the age of the target child” pentru engleză iar Task-ul [BabyLM](https://babylm.github.io/) are ca scop antrenarea de LLM cu texte care pot fi plauzibile în dezvoltarea copiilor
-- biblioteci sau API care să comunice cu [WordNet](http://wordnetweb.princeton.edu/perl/webwn?s=dog) sau [ConceptNet](https://conceptnet.io/)
-- algoritmi traducere automată (ideal ar fi să ruleze local)
-- rețele pre-antrenate de tip BERT, RoBERTa, XLM-RoBERTa (obligatoriu trebuie să ruleze local) din care să scoateți vectori de activări sau valori interne, word embeddings
-- LLM: llama-3, mistral etc.  obligatoriu trebuie să ruleze local din care puteți scoate vectori de activări sau valori interne din rețea
-
-
-**Nu aveți voie cu:**
-- API-uri externe
-- extragerea scorurilor de complexitate prin parsarea unor prompturi rezultate din LLM, din LLM aveți voie doar cu valori interne ale vectorilor
-
-
-<a name="sugestii"></a> 
-## Sugestii de caracteristici
-
-- frecvența cuvântului într-un corpus foarte mare - aici putem folosi biblioteca wordfreq, dar ideal să implementați o funcție care extrage cuvintele frecvente dintr-un corpus arbitrar
-- lungimea cuvantului
-- nr de silabe
-- nr de vocale (aici sunt si semivocale, fara diftongi)
-- daca e titlu sau entitate
-- nr de synsets din WordNet
-- nr de hypernime (colour is a hypernym of red)
-- nr de hyponime (spoon is a hyponym of cutlery)
-- word embedding din spacy
-- word embedding contextuale din modele LLM sau transformers
-- nr de relații în arborele de sintaxă al propoziției
-- cuvinte și părți de vorbire din context
-- încercați să standardizați / normalizați datele
-
-
-<a name="eval"></a> 
-## Evaluarea modelelor
-Evaluarea se face folosind o metrică customizată folosind două concepte din statistică:
-- [Coeficientul de determinare](https://en.wikipedia.org/wiki/Coefficient_of_determination)
-- [Coeficientul de corelație Pearson](https://en.wikipedia.org/wiki/Pearson_correlation_coefficient)
-
 
 Pentru un set de predicții: $$p = \{p_1, \cdots, p_m\}$$
 și un set de valori reale care trebuiau prezise:  $$y = \{y_1, \cdots, y_m\}$$
